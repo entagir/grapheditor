@@ -1,0 +1,59 @@
+#state-line
+{
+display:none;
+}
+
+#mbut
+{
+background:#b9b9b9;
+display:block;
+padding:10px 7px;
+}
+
+.bar
+{
+background:white;
+display:block;
+width:18px;
+height:2px;
+margin-bottom:3px;
+}
+
+#lmenu
+{
+display:block;
+width:60%;
+height:100%;
+position:absolute;
+background:white;
+float:left;
+left:-61%;
+transition-property: left;
+transition-duration: 0.5s;	
+z-index:10;
+border-right:1px solid #CACACA;
+}
+
+#m-menu
+{
+display:table-row;
+height:1%;
+}
+
+#menu
+{
+display:none;
+}	  
+
+#gcanv
+{
+border:none;
+}
+
+#lmenu > div
+{
+padding:2%;
+padding-left:3%;
+border-bottom:1px solid #CACACA;
+font-weight:bold;
+}

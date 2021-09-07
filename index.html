@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="description" content="Редактор графов онлайн. Решение задач по графам онлайн. Компоненты сильной связности, Расстояния в ориентированном графе, Поиск минимального пути, Эйлеров цикл, Эйлерова цепь, Поиск минимального остовного дерева, Степени вершин" />
+	<meta name="keywords" content="Графы, Графы онлайн, Решение задач по графам онлайн, Компоненты сильной связности, Расстояния в ориентированном графе, Поиск минимального пути, Эйлеров цикл, Эйлерова цепь, Поиск минимального остовного дерева, Степени вершин" />
+	<meta name="robots" content="all" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+	<title>Новый граф - редактор графов</title>
+
+	<link href="style/style.css" rel="stylesheet">
+	<link href="style/screen.css" rel="stylesheet" media="only screen and (max-width:1000px)">
+	<link href="style/mphone.css" rel="stylesheet" media="only screen and (max-width:700px)">
+
+	<link href="Tlaloc/style.css" rel="stylesheet">
+
+	<link href="favicon.ico" rel="icon" type="image/png" >
+
+	<script src="Tlaloc/script.js"></script>
+
+	<script src="script/class.js"></script>
+
+	<script src="script/environment.js"></script>
+	<script src="script/main.js"></script>
+
+	<script src="script/alg/mst.js"></script>
+	<script src="script/alg/sc.js"></script>
+	<script src="script/alg/dist.js"></script>
+	<script src="script/alg/wave.js"></script>
+	<script src="script/alg/afb.js"></script>
+	<script src="script/alg/el_cycle.js"></script>
+	<script src="script/alg/el_chain.js"></script>
+	<script src="script/alg/deg.js"></script>
+
+	<script src="script/default.js"></script>
+
+</head>
+<body>	
+	 
+	<div id="cont">
+
+		<div id="header" class="panel">
+			<p id="head-text">Редактор графов</p>
+		</div>
+
+		<div id="menu"></div>
+
+		<div id="work">	 
+			<canvas id="gcanv" >Обновите браузер!</canvas>
+		</div>
+
+		<div id="tabs"></div>
+
+		<div id="footer">
+			<p id="foot-text"><span>Graph-Editor | </span><span id="message-box">Строка состояния</span></p>
+		</div>
+
+	</div>
+
+	<form style="display:none;">
+		<input type="file" id="gload" accept=".gml">
+	</form>	
+
+	<div>
+		
+		<div id="dialog-edge" class="dialog">
+			<form onsubmit="return false;">
+				<label> Вес: &nbsp; <input type="number" value="0" step="1" min="0" max="999" size="4" id="iweight"> </label>
+				<hr>
+				<div id="control-but"><input type="button" value="Неориентированный" class="standart-but" onclick="env.add_edge(0);env.dialog_hide('edge');"> <input type="button" value="Ориентированный" class="standart-but" onclick="env.add_edge(1);env.dialog_hide('edge');"></div>
+				<div id="extra-but" style="display:none;" ><input type="button" value="Добавить" class="standart-but" onclick="env.add_edge(env.newArrow);env.dialog_hide('edge');"></div>
+			</form>
+		</div>
+
+		<div id="dialog-save" class="dialog">
+			<form onsubmit="return false;">
+				<a href="" download="Новый граф.gml" style="display:none;" id="gsave">Новый граф</a>
+				<input type="text" value="" placeholder="Новый граф" onchange="env.file_rename(value);" id="isave">
+				<input type="button" value="Сохранить" class="standart-but" onclick="gsave.click(); env.dialog_hide('save');">
+			</form>
+		</div>
+
+		<div id="dialog-image-save" class="dialog">
+			<form onsubmit="return false;">
+				<a href="" download="Новый граф.png" style="display:none;" id="image-save">Новый граф</a>
+				<img src="" class="save-img" id="save-img">
+				<a href="javascript:void(0);" id="image-save-open" target="_blank" onclick="env.image_open();">Открыть в новой вкладке</a><br><br>
+				<input type="text" value="" placeholder="Новый граф" onchange="env.image_rename(value);" id="image-save-input">
+				<input type="button" value="Сохранить" class="standart-but" onclick="document.getElementById('image-save').click();env.dialog_hide('image_save');">
+			</form>
+		</div>
+
+		<div id="dialog-matrix" class="dialog">
+			<div class="matrix-cont">
+				<div id="matrix"></div>
+				<br>
+				<input type="button" value="Закрыть" class="standart-but" onclick="env.dialog_hide('matrix');">
+			</div>
+		</div>
+
+		<div id="dialog-vertex-rename" onclick="event.stopPropagation();">
+			<form onsubmit="return false;">
+				<input type="text" id="vertex-rename-text" value="" placeholder="Имя вершины">
+				<input type="button" value="Переименовать" class="standart-but" onclick="env.graph.vertex_rename(env.contextVertex, document.getElementById('vertex-rename-text').value);env.dialog_hide('vertex_rename');">
+			</form>
+		</div>
+
+		<div id="dialog-edge-edit" class="dialog">
+			<form>
+				<label> Вес: &nbsp; <input type="number" value="0" step="1" min="0" max="999" size="4" id="edit-weight"> </label>
+				<input type="button" value="Изменить" class="standart-but" onclick="env.graph.edge_edit(env.contextEdge, document.getElementById('edit-weight').value);env.dialog_hide('edge_edit');">
+			</form>
+		</div>
+
+		<div id="dialog-settings" class="dialog">
+			<form onsubmit="return false;">
+
+			<fieldset>
+				<legend>Именование вершин</legend>
+				<label>1,2,3  <input type="radio" name="vertex_name" value="number" ></label>
+				<label>A,B,C  <input type="radio" name="vertex_name" value="letter" ></label>
+			</fieldset>
+
+			<fieldset>
+			<legend>Палитра</legend>
+			
+				<div id="table-color">
+					<div>Цвет фона</div> <div><input type="color" id="background_fill" ></div>
+					
+					<div>Цвет вершин</div> <div><input type="color" id="vertex_fill" ></div>
+					<div>Цвет вершин при наведении</div> <div><input type="color" id="vertex_fill_s2" ></div>
+					<div>Цвет вершин при выделении</div> <div><input type="color" id="vertex_fill_s1" ></div>
+					
+					<div>Цвет ребер</div> <div><input type="color" id="edge_fill" ></div>
+					<div>Цвет ребер при наведении</div> <div><input type="color" id="edge_fill_s2" ></div>
+					
+					<div>Цвет обводки</div> <div><input type="color" id="color_stroke_fill" ></div>
+					<div>Цвет текста</div> <div><input type="color" id="color_text_fill" ></div>
+					<div>Цвет текста для степеней вершин</div> <div><input type="color" id="color_text_deg_fill" ></div>
+				</div>
+
+			</fieldset>
+
+			<input type="button" value="По умолчанию" class="standart-but" onclick="env.set_settings(false);env.dialog_hide('settings');"><br><br>
+
+			<input type="button" value="Сохранить" class="standart-but" onclick="env.set_settings(true);env.dialog_hide('settings');">
+			<input type="button" value="Отмена" class="standart-but" onclick="env.dialog_hide('settings');">
+
+			</form>
+		</div>
+
+		<div id="dialog-rename" class="dialog">
+			<form onsubmit="return false;">
+				<input type="text" value="Новый граф" placeholder="Новый граф" id="graph-name">
+				<input type="button" value="Сохранить" class="standart-but" onclick="env.graph_rename(document.getElementById('graph-name').value);env.dialog_hide('rename');">
+			</form>
+		</div>
+
+		<div id="dialog-about" class="dialog">
+			<div style="line-height: 1.5;">
+				<label>Редактор графов</label><br>
+				<label>2017-2020</label><br>
+				<label id="dialog-about-version">v 1.0</label><br>
+				<button onclick="env.dialog_hide('about');" >Закрыть</button>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
