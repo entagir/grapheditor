@@ -1,8 +1,8 @@
 <h1 align="center">GraphEditor</h1>
 
-<img src="https://entagir.ru/img/grapheditor_main.png">
+<img src="https://entagir.xyz/img/grapheditor_main.png">
 
-<h2 align="center"><a  href="https://graph.entagir.ru">graph.entagir.ru</a></h2>
+<h2 align="center"><a  href="https://graph.entagir.xyz">graph.entagir.xyz</a></h2>
 
 ## Description
 GraphEditor is a web-based graph editor. Use it for editing, applying algorithms on graphs (such as minimal spanning tree, pathfinding, and more) and customizable visualization of your graphs.
