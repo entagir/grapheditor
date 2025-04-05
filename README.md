@@ -1,6 +1,6 @@
 <h1 align="center">GraphEditor</h1>
 
-<img src="https://entagir.xyz/img/grapheditor_main.png">
+<img src="https://entagir.xyz/img/graph1.png">
 
 <h2 align="center"><a  href="https://graph.entagir.xyz">graph.entagir.xyz</a></h2>
 
