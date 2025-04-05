@@ -184,7 +184,7 @@ class Graph // Граф
 	{
 		//graph
 
-		let gsource = "graph [\n\tcomment \"grapheditor.ru\"\n";
+		let gsource = "graph [\n\tcomment \"graph.entagir.xyz\"\n";
 
 		for(let i in this.vertex) // node
 		{

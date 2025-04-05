@@ -101,7 +101,7 @@ class Environment // Окружение
 
 	init() // Инициализация приложения (окружения)
 	{
-		console.info('grapheditor.ru\nversion ' + this.version);
+		console.info('graph.entagir.xyz\nversion ' + this.version);
 
 		let obj = this;
 
